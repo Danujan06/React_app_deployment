@@ -1,4 +1,4 @@
-name: CICD
+name: CI/CD
 
 on:
   push:
@@ -14,16 +14,19 @@ jobs:
       - name: Login to Docker Hub
         run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
       - name: Build Docker Image
-        run: docker build -t danujan/react_app_1 .
+        run: docker build -t danujan/react_app_1:${{ github.sha }} .
       - name: Push Docker Image
-        run: docker push danujan/react_app_1:latest
+        run: docker push danujan/react_app_1:${{ github.sha }}
+
   deploy:
     needs: build
     runs-on: hello
     steps:
-      - name: Pull image from docker hub
-        run: docker pull danujan/react_app_1:latest 
-      - name: Delete Old Container
-        run: docker rm -f reactContainer
-      - name: Run docker container
-        run: docker run -d -p 3000:80 --name reactContainer danujan/react_app_1
+      - name: Pull image from Docker Hub
+        run: docker pull danujan/react_app_1:${{ github.sha }}
+      - name: Stop and Remove Old Container
+        run: |
+          docker stop reactContainer || true
+          docker rm reactContainer || true
+      - name: Run Docker Container
+        run: docker run -d -p 3000:80 --name reactContainer danujan/react_app_1:${{ github.sha }}
