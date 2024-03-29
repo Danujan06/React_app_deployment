@@ -2,7 +2,6 @@
 FROM node:20-alpine as build
 
 # Create app directory
-
 WORKDIR /app
 
 # Install app dependencies
