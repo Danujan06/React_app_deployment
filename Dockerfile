@@ -4,7 +4,7 @@ FROM node:20-alpine as build
 # Create app directory
 WORKDIR /app
 
-# Install app dependencies
+# Install app dependencie
 COPY package.json .
 
 # Install dependencies
@@ -14,7 +14,7 @@ COPY . .
 
 RUN npm run build
 
-# Step 2: Serve the app
+# Step 2:Serve the app
 # Use nginx image
 FROM nginx:1.23-alpine
 
