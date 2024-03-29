@@ -19,7 +19,7 @@ jobs:
         run: docker push danujan/react_app_1:latest
   deploy:
     needs: build
-    runs-on: aws_ec2
+    runs-on: hello
     steps:
       - name: Pull image from docker hub
         run: docker pull danujan/react_app_1:latest 
