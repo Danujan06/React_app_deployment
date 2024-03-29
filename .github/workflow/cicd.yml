@@ -21,7 +21,7 @@ jobs:
     needs: build
     runs-on: hello
     steps:
-      - name: Pull imag from docker hub
+      - name: Pull image from docker hub
         run: docker pull danujan/react_app_1:latest 
       - name: Delete Old Container
         run: docker rm -f reactContainer
